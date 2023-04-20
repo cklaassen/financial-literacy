@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Financial Literacy is Important for High School Students</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Financial Literacy</div>
+        <nav class="nav-links">
+          <a href="#home" id="#home" class="nav-link active">Home</a>
+          <a href="#why-matters" id="#why-matters" class="nav-link">Why it Matters</a>
+          <a href="#impact" id="#impact" class="nav-link">Impact</a>
+          <!-- <a href="#resources" id="#resources" class="nav-link">Resources</a>
+          <a href="#contact" id="#contact" class="nav-link">Contact</a> -->
+        </nav>
+      </header>      
+  <main>
+
+    <section id="home">
+        <div class="home-banner">
+            <h2>Don't Be Left in the Dark</h2>
+            <p>Did you know that the average American has over $90,000 in debt?</p>
+            <p>Don't let financial struggles hold you back. Advocate for the skills you need to succeed!</p>
+            <a href="#why-matters" class="home-banner-cta">Find Out How</a>
+        </div>
+        <div class="home-container">
+            <div class="home-card">
+                <h3 class="home-card-title">Security</h3>
+                <p class="home-card-description">Learn how to take control of your financial future by mastering the art of saving, investing, and managing money effectively.</p>
+                <div class="home-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+            <div class="home-card">
+                <h3 class="home-card-title">Empowerment</h3>
+                <p class="home-card-description">By learning about financial literacy and advocating for it in your community, you can help create a brighter future for yourself and others.</p>
+                <div class="home-icon">
+                    <i class="fas fa-power-off"></i>
+                </div>
+            </div>
+            <div class="home-card">
+                <h3 class="home-card-title">Awareness</h3>
+                <p class="home-card-description">Financial literacy isn't just about money. It's about understanding the world around you, and making informed decisions about your life.</p>
+                <div class="home-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="why-matters">
+        <div class="why-matters-banner">
+          <h2>Why Financial Literacy Matters</h2>
+        </div>
+      
+        <div class="why-matters-content">
+          <ul class="why-matters-stats">
+            <li><i class="fas fa-check"></i>21% of Americans don’t Save any of their annual income</li>
+            <li><i class="fas fa-check"></i>24% of consumers have no savings set aside for emergencies</li>
+            <li><i class="fas fa-check"></i>38% of American households have credit card debt</li>
+            <li><i class="fas fa-check"></i>56% of Americans can’t afford a $1,000 emergency expense</li>
+            <li><i class="fas fa-check"></i>58% of Americans have less than $5,000 in savings</li>
+          </ul>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="why-matters-banner">
+            <p>Financial literacy is an essential skill that enables individuals to make informed decisions about their finances, investments, and savings. Understanding how to manage money effectively can help individuals achieve their financial goals, whether it is saving for retirement, purchasing a home, or paying off debt. By developing a basic understanding of financial literacy, individuals can gain greater control over their financial lives and make informed decisions that will benefit them in the long run. Financial literacy is particularly important in today's world, where many people face financial challenges due to factors such as economic volatility, increasing debt, and a rapidly changing job market.</p>
+            <p>On the other hand, the dangers of being financially illiterate cannot be overstated. People who lack financial literacy may struggle to make sound financial decisions, leading to serious consequences for their financial well-being. For instance, individuals who do not understand the basics of budgeting and saving may overspend and accumulate debt, which can have long-term effects on their financial stability. Similarly, people who do not have a good understanding of investments may be more susceptible to scams and other financial frauds, leading to significant financial losses. Overall, the lack of financial literacy can have far-reaching impacts on an individual's financial security and overall well-being, highlighting the importance of prioritizing financial education and awareness.</p>
+        </div>
+    </section>
+    <section id="impact">
+      <h2>Why Your School Needs a Financial Literacy Course</h2>
+      <p></p>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <p></p>
+    </section>
+    <section id="how-advocate">
+      <h2>How to Advocate for a Financial Literacy Course at Your School</h2>
+      <p></p>
+      <ol>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ol>
+    </section>
+  </main>
+  <footer>
+    <p>Made with ❤️ at Purdue</p>
+  </footer>
+  <script>
+    const tabs = document.querySelectorAll('nav a');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', e => {
+        e.preventDefault();
+
+        const id = tab.getAttribute('href');
+
+        const section = document.querySelector(id);
+        const sections = document.querySelectorAll('main section');
+
+        sections.forEach(s => {
+          s.style.display = 'none';
+        });
+
+        Array.prototype.slice.call(document.getElementsByClassName('nav-links')[0].children).forEach(c => {
+            c.className = c.className.replace(new RegExp(' active', 'g'), '');
+        });
+
+        section.style.display = 'block';
+
+        document.getElementById(id).className += ' active';
+      });
+    });
+
+    tabs[0].click();
+  </script>
+</body>
+</html>
