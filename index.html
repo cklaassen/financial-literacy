@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 <body>
     <header class="header">
@@ -15,8 +16,8 @@
           <a href="#home" id="#home" class="nav-link active">Home</a>
           <a href="#why-matters" id="#why-matters" class="nav-link">Why it Matters</a>
           <a href="#impact" id="#impact" class="nav-link">Impact</a>
-          <!-- <a href="#resources" id="#resources" class="nav-link">Resources</a>
-          <a href="#contact" id="#contact" class="nav-link">Contact</a> -->
+          <a href="#how-advocate" id="#how-advocate" class="nav-link">How to Advocate</a>
+          <!-- <a href="#contact" id="#contact" class="nav-link">Contact</a> -->
         </nav>
       </header>      
   <main>
@@ -75,32 +76,187 @@
         </div>
     </section>
     <section id="impact">
-      <h2>Why Your School Needs a Financial Literacy Course</h2>
-      <p></p>
-      <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
-      <p></p>
+      <div class="container">
+        <div class="impact-banner">
+          <h2>See the Impact of Your Financial Choices</h2>
+        </div>
+        <div class="total-chart-container">
+          <div class="chart-container">
+            <canvas id="lineChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <canvas id="pieChart"></canvas>
+          </div>
+        </div>
+        <div class="impact-form">
+          <h3>Calculate Your Impact</h3>
+          <div class="input-container">
+            <div class="form-group">
+              <label for="current-savings">Current Savings:</label>
+              <input type="number" id="current-savings" name="current-savings" placeholder="$" value="100">
+            </div>
+            <div class="form-group">
+              <label for="monthly-contribution">Monthly Contribution:</label>
+              <input type="number" id="monthly-contribution" name="monthly-contribution" placeholder="$" value="50">
+            </div>
+            <div class="form-group">
+              <label for="years-to-save">Years to Save:</label>
+              <input type="number" id="years-to-save" name="years-to-save" placeholder="Years" value="30">
+            </div>
+            <div class="form-group">
+              <label for="bank">Bank:</label>
+              <select id="bank" name="bank">
+                <option value="Ally Bank">Ally Bank</option>
+                <option value="Alliant Credit Union">Alliant Credit Union</option>
+                <option value="Barclays">Barclays</option>
+                <option value="BofA">Bank of America</option>
+                <option value="Capital One">Capital One</option>
+                <option value="First Tech">First Tech Credit Union</option>
+                <option value="Chase">JP Morgan Chase</option>
+                <option value="Citi">Citibank</option>
+                <option value="Goldman Sachs">Goldman Sachs</option>
+                <option value="HSBC">HSBC</option>
+                <option value="PNC Bank">PNC Bank</option>
+                <option value="Purdue Federal Credit Union">Purdue Federal Credit Union</option>
+                <option value="TD Bank">TD Bank</option>
+                <option value="US Bank">U.S. Bank</option>
+                <option value="Wells Fargo">Wells Fargo</option>
+                <option value="Matress">Your Mattress</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn">Calculate</button>
+        </div>
+      </div>
     </section>
     <section id="how-advocate">
-      <h2>How to Advocate for a Financial Literacy Course at Your School</h2>
-      <p></p>
-      <ol>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ol>
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <h2 class="text-center mb-5">How to Advocate for Financial Literacy Education</h2>
+          <p>Advocating for financial literacy education can seem like an overwhelming task, but it doesn't have to be. Here are a few tips to get you started:</p>
+          <ol>
+            <li>Research the current state of financial literacy education in your community and country.</li>
+            <li>Connect with local educators, school board members, and community leaders to discuss the importance of financial literacy education.</li>
+            <li>Attend school board meetings or community events to raise awareness about the need for financial literacy education.</li>
+            <li>Partner with local organizations or businesses to provide resources, funding, or speakers for financial literacy education initiatives.</li>
+            <li>Write letters or emails to elected officials and policymakers advocating for increased financial literacy education funding and support.</li>
+            <li>Participate in advocacy campaigns or grassroots efforts to promote financial literacy education on a national level.</li>
+            <li>Stay informed about financial literacy legislation and policy changes, and continue to advocate for ongoing improvements and updates.</li>
+          </ol> 
+          <p>Remember, advocating for financial literacy education is an important step towards empowering individuals to make informed financial decisions and achieve financial stability.</p>
+        </div>
+      </div>
     </section>
   </main>
   <footer>
     <p>Made with ❤️ at Purdue</p>
   </footer>
   <script>
+    const rates = {
+      "Ally Bank": .0375,
+      "Alliant Credit Union": .031,
+      "Barclays": .038,
+      "BofA": .0001,
+      "Capital One": .035,
+      "First Tech": .04,
+      "Chase": .0001,
+      "Citi": .0012,
+      "Goldman Sachs": .0417,
+      "HSBC": .0001,
+      "PNC Bank": .043,
+      "Purdue Federal Credit Union": .001,
+      "TD Bank": .0366,
+      "U.S. Bank": .0385,
+      "Wells Fargo": .0015,
+      "Matress": 0
+    };
+
+    const initialInvestment = Number(document.getElementById('current-savings').value);
+    const monthlyContribution = Number(document.getElementById('monthly-contribution').value) * 12;
+    const interestRate = rates[document.getElementById('bank').value]
+    const timePeriod = Number(document.getElementById('years-to-save').value);
+
+    // Calculate the impact
+    const data = [];
+    let currentSavings = initialInvestment;
+    for (let i = 1; i <= timePeriod; i++) {
+      console.log(currentSavings, 1 + interestRate / 100)
+      currentSavings = (currentSavings + monthlyContribution) * (1 + interestRate);
+      data.push(currentSavings.toFixed(2));
+    }
+
+    // Create the chart
+    const ctx = document.getElementById('lineChart').getContext('2d');
+    const lineChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: Array.from({ length: timePeriod }, (_, i) => i + 1),
+        datasets: [{
+          label: 'Savings over time',
+          data,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        height: "100%"
+        // other options
+      }
+    });
+
+    var data_p = {
+      labels: ['Interest', 'Principal'],
+      datasets: [{
+        data: [currentSavings - (initialInvestment + (monthlyContribution * timePeriod)), initialInvestment + (monthlyContribution * timePeriod)],
+        backgroundColor: ['#36a2eb', '#ff6384']
+      }]
+    };
+
+    var ctx_p = document.getElementById('pieChart').getContext('2d');
+    var myPieChart = new Chart(ctx_p, {
+      type: 'pie',
+      data: data_p,
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        height: "100%"
+      }
+    });
+
+    function updateGraph() {
+      const initialInvestment = Number(document.getElementById('current-savings').value);
+      const monthlyContribution = Number(document.getElementById('monthly-contribution').value) * 12;
+      const interestRate = rates[document.getElementById('bank').value]
+      const timePeriod = Number(document.getElementById('years-to-save').value);
+
+      // Calculate the impact
+      const data = [];
+      let currentSavings = initialInvestment;
+      for (let i = 1; i <= timePeriod; i++) {
+        currentSavings = (currentSavings + monthlyContribution) * (1 + interestRate);
+        data.push(currentSavings.toFixed(2));
+      }
+
+      // lineChart.data.datasets[0].data = data;
+      lineChart.data.datasets.pop();
+      lineChart.data.datasets.push({
+          label: 'Savings over time',
+          data,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+      });
+      lineChart.data.labels = Array.from({ length: timePeriod }, (_, i) => i + 1);
+
+      myPieChart.data.datasets[0].data = [currentSavings - (initialInvestment + (monthlyContribution * timePeriod)), initialInvestment + (monthlyContribution * timePeriod)]
+      myPieChart.update();
+      lineChart.update();
+      // myPieChart.data.labels = ['Interest', 'Principal']
+    }
+
     const tabs = document.querySelectorAll('nav a');
 
     tabs.forEach(tab => {
@@ -127,6 +283,12 @@
     });
 
     tabs[0].click();
+
+    const calculateButton = document.querySelector('.btn');
+
+    calculateButton.addEventListener('click', () => {
+      updateGraph();
+    });
   </script>
 </body>
 </html>
