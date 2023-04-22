@@ -75,6 +75,7 @@ body {
     font-size: 18px;
     line-height: 1.5;
     margin-bottom: 20px;
+    max-width: 900px;
   }
   
   .home-banner-cta {
@@ -134,11 +135,11 @@ body {
     text-transform: uppercase;
   }
   
-  .nav-link:hover {
+  .nav-links .nav-link:hover {
     color: #0077b6;
   }
   
-  .nav-link.active {
+  .nav-links .nav-link.active {
     color: #0077b6;
     border-bottom: 2px solid #0077b6;
   }
